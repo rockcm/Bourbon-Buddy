@@ -1,15 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BourbonBuddy.Api.Contracts;
 
 public record ReviewCreateRequest(
-    Guid UserId,
-    Guid BottleId,
-    decimal Rating,
-    decimal? NoseRating,
-    decimal? PalateRating,
-    decimal? MouthfeelRating,
-    decimal? ValueRating,
-    string Visibility,
-    string Notes,
+    [Required] Guid UserId,
+    [Required] Guid BottleId,
+    [Range(0, 5)] decimal Rating,
+    [Range(0, 5)] decimal? NoseRating,
+    [Range(0, 5)] decimal? PalateRating,
+    [Range(0, 5)] decimal? MouthfeelRating,
+    [Range(0, 5)] decimal? ValueRating,
+    [Required, StringLength(32)] string Visibility,
+    [Required, StringLength(8000)] string Notes,
     IReadOnlyCollection<string> Tags,
     IReadOnlyCollection<string> ImageUrls);
 
