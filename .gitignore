@@ -1,0 +1,20 @@
+# .NET build artifacts
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userprefs
+*.pidb
+*.userosscache
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# Node / Expo
+node_modules/
+.expo/
+
+# OS files
+.DS_Store
+Thumbs.db
