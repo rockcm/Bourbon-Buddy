@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchDiscover } from '../api';
+import { fetchDiscover } from '../api/client';
 import { RankedBottle } from '../types';
 
 const fallback: RankedBottle[] = [

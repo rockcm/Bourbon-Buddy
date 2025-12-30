@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { fetchBottles } from '../api';
+import { fetchBottles } from '../api/client';
 import { Bottle } from '../types';
+import { BottleCard } from './cards/BottleCard';
 
 const fallbackBottles: Bottle[] = [
   {
@@ -88,19 +89,7 @@ export function BottleSearch() {
       <div className="cards-grid" style={{ marginTop: 14 }}>
         {bottles.length === 0 && <div className="empty-state">No bottles found.</div>}
         {bottles.map((bottle) => (
-          <article className="card" key={bottle.id}>
-            <h3>{bottle.name}</h3>
-            <small>
-              {bottle.brand} • {bottle.category}
-            </small>
-            {bottle.description && <p>{bottle.description.slice(0, 120)}...</p>}
-            <div className="metrics">
-              {bottle.averageRating != null && <span className="metric">⭐️ {bottle.averageRating.toFixed(1)}</span>}
-              {bottle.reviewCount != null && <span className="metric">{bottle.reviewCount} reviews</span>}
-              {bottle.abv && <span className="metric">{bottle.abv}% ABV</span>}
-              {bottle.ageYears && <span className="metric">{bottle.ageYears} years</span>}
-            </div>
-          </article>
+          <BottleCard key={bottle.id} bottle={bottle} />
         ))}
       </div>
     </section>
