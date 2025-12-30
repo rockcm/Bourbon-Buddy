@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export function SignupPage() {
@@ -12,7 +12,7 @@ export function SignupPage() {
   const navigate = useNavigate();
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/discover" replace />;
   }
 
   async function onSubmit(event: FormEvent) {
@@ -20,16 +20,17 @@ export function SignupPage() {
     setError(null);
     try {
       await signup(username, email, password, displayName);
-      navigate('/');
+      navigate('/discover', { replace: true });
     } catch (err) {
       setError((err as Error).message);
     }
   }
 
   return (
-    <section>
+    <section className="auth-card">
+      <p className="pill">Join Bourbon Buddy</p>
       <h2 className="section-title">Create an account</h2>
-      <p className="section-subtitle">Sign up to save reviews and manage your cellar.</p>
+      <p className="section-subtitle">Save bottles you love and unlock your personal cellar.</p>
       <form onSubmit={onSubmit} className="form-grid">
         <label>
           Username
@@ -47,11 +48,14 @@ export function SignupPage() {
           Password
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </label>
-        {error && <div style={{ color: '#b91c1c' }}>{error}</div>}
+        {error && <div className="error-text">{error}</div>}
         <button className="button" type="submit">
           Sign up
         </button>
       </form>
+      <p className="muted">
+        Already have an account? <Link className="inline-link" to="/auth/login">Log in</Link>
+      </p>
     </section>
   );
 }
