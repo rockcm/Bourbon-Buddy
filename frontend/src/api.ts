@@ -1,6 +1,8 @@
 import { Bottle, DiscoverResponse, ReviewRequest, ReviewResponse } from './types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api';
+// During development we proxy `/api` to the backend (see vite.config.ts).
+// Use `VITE_API_BASE_URL` to override in production or non-proxied setups.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
 
 async function handle<T>(response: Response): Promise<T> {
   if (!response.ok) {
