@@ -55,6 +55,19 @@ public class UsersController : ControllerBase
         return Ok(profile);
     }
 
+    [HttpGet("by-username/{username}")]
+    public async Task<ActionResult<UserProfileResponse>> GetProfileByUsernameAsync(string username, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        var profile = await MapProfileAsync(user.Id, cancellationToken);
+        return Ok(profile);
+    }
+
     [HttpPost("{id}/follow")]
     public async Task<ActionResult> FollowAsync(Guid id, [FromBody] FollowRequest request, CancellationToken cancellationToken)
     {

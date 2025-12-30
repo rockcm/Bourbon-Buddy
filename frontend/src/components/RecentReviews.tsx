@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { fetchRecentReviews } from '../api';
+import { fetchRecentReviews } from '../api/client';
 import { ReviewResponse } from '../types';
+import { ReviewCard } from './cards/ReviewCard';
 
 const fallback: ReviewResponse[] = [
   {
@@ -48,20 +49,7 @@ export function RecentReviews() {
       {error && <div style={{ color: '#b91c1c' }}>Using sample reviews: {error}</div>}
       <div className="cards-grid">
         {reviews.map((review) => (
-          <article className="card" key={review.id}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <h3 style={{ margin: 0 }}>@{review.username}</h3>
-              <span className="metric">⭐️ {review.rating.toFixed(1)}</span>
-            </div>
-            <p style={{ margin: '8px 0' }}>{review.notes}</p>
-            <div className="tag-list">
-              {review.tags.map((tag) => (
-                <span key={tag} className="tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </article>
+          <ReviewCard key={review.id} review={review} />
         ))}
       </div>
     </section>

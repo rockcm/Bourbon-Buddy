@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
     public DbSet<Like> Likes => Set<Like>();
     public DbSet<Comment> Comments => Set<Comment>();
     public DbSet<ImageAsset> Images => Set<ImageAsset>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -99,5 +100,11 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<UserCellarItem>()
             .HasIndex(c => new { c.UserId, c.BottleId })
             .IsUnique();
+
+        modelBuilder.Entity<RefreshToken>()
+            .HasOne(r => r.User)
+            .WithMany(u => u.RefreshTokens)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
